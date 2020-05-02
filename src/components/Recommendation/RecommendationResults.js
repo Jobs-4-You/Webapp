@@ -56,9 +56,7 @@ const Position = ({ position }) => {
       <Row>
         <Col span={6}>Description:</Col>
         <Col span={18}>
-          <Paragraph ellipsis={{ rows: 3, expandable: true }}>
-            {position.descriptions[0].description}
-          </Paragraph>
+          <Paragraph ellipsis={{ rows: 3 }}>{position.descriptions[0].description}</Paragraph>
         </Col>
       </Row>
       <EmploymentDate position={position} objKey="startDate" name="Start" />

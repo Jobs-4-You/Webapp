@@ -1,2 +1,2 @@
 export { default as RecommendationSearch } from './RecommendationSearch';
-export { default as RecommendationcResults } from './RecommendationResults';
+export { default as RecommendationResults } from './RecommendationResults';

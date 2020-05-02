@@ -1,11 +1,14 @@
 import { PageHeader } from 'antd';
-import { RecommendationSearch, RecommendationcResults } from 'components/Recommendation';
+import { RecommendationSearch, RecommendationResults } from 'components/Recommendation';
 import { useRouter } from 'next/router';
+import get from 'lodash/get';
 import useRecommendation from 'hooks/recommendation';
-import RecommendationResults from 'components/Recommendation/RecommendationResults';
+import useMe from 'hooks/me';
 
 const Recommendation = () => {
   const router = useRouter();
+  const me = useMe();
+  const searchEnabled = get(me, 'group.uiConfig.search');
 
   const { recoms, setRecomVariables } = useRecommendation();
 
@@ -19,7 +22,7 @@ const Recommendation = () => {
         title="Recommandation"
         subTitle="Recommande des jobs"
       >
-        <RecommendationSearch setRecomVariables={setRecomVariables} />
+        {searchEnabled ? <RecommendationSearch setRecomVariables={setRecomVariables} /> : null}
       </PageHeader>
       <br />
       <RecommendationResults recoms={recoms} />

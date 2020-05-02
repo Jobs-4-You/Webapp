@@ -1,4 +1,5 @@
 import gql from 'graphql-tag';
+import { FRAGMENT_GROUP_ALL_FIELDS } from './fragments';
 
 export const ME = gql`
   query me {
@@ -12,24 +13,20 @@ export const ME = gql`
       baselineLink
       formDone
       group {
-        id
-        name
-        baselineId
-        cruiserId
+        ...GroupAllFields
       }
     }
   }
+  ${FRAGMENT_GROUP_ALL_FIELDS}
 `;
 
 export const ALL_GROUPS = gql`
   query allGroups {
     allGroups {
-      id
-      name
-      baselineId
-      cruiserId
+      ...GroupAllFields
     }
   }
+  ${FRAGMENT_GROUP_ALL_FIELDS}
 `;
 
 export const GET_SIGNUP_LINK = gql`

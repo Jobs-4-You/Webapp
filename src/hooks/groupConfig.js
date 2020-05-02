@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Form } from 'antd';
 import { useMutation } from '@apollo/react-hooks';
 import isEqual from 'lodash/isEqual';
+import omit from 'lodash/omit';
 import { useAuth } from 'hooks/auth';
 import { UPDATE_GROUP_CONFIG } from 'gql/mutations';
 
@@ -34,15 +35,21 @@ export default (group) => {
   const errorsCount = async () => {
     try {
       await validateForm();
+      return 0;
     } catch (err) {
       const { errorFields } = err;
       return errorFields.length;
     }
   };
   const updateCanSave = async () => {
+    console.log('-------------');
     const noErrors = (await errorsCount()) === 0;
     const changed = !isEqual(refGroup, getFormValues());
+    console.log(refGroup);
+    console.log(getFormValues());
+    console.log(changed);
     setCanSave(noErrors && changed);
+    console.log('-------------');
   };
 
   // Exosed functions
@@ -72,6 +79,7 @@ export default (group) => {
       name: group.name,
       baselineId: group.baselineId,
       cruiserId: group.cruiserId,
+      uiConfig: omit(group.uiConfig, '__typename'),
     });
   }, [group]);
   return { form, onChange, reset, save, canSave };

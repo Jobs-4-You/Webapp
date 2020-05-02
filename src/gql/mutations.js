@@ -1,4 +1,5 @@
 import gql from 'graphql-tag';
+import { FRAGMENT_GROUP_ALL_FIELDS } from './fragments';
 
 export const AUTH = gql`
   mutation Auth($email: String!, $password: String!) {
@@ -33,11 +34,9 @@ export const UPDATE_GROUP_CONFIG = gql`
   mutation UpdateGroupConfig($groupId: ID!, $groupData: GroupInput!) {
     updateGroupConfig(groupId: $groupId, groupData: $groupData) {
       group {
-        id
-        name
-        baselineId
-        cruiserId
+        ...GroupAllFields
       }
     }
   }
+  ${FRAGMENT_GROUP_ALL_FIELDS}
 `;

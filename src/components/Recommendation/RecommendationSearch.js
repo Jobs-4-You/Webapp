@@ -1,8 +1,14 @@
 import { Form, Row, Col, Button, Slider } from 'antd';
+import get from 'lodash/get';
 import JobSearch from './JobSearch';
+import useMe from 'hooks/me';
 
 const Recommendation = ({ setRecomVariables }) => {
   const onValuesChange = (v) => console.log(v, 'vvv');
+
+  const me = useMe();
+  const alphaFixed = get(me, 'group.uiConfig.alphaFixed');
+  const betaFixed = get(me, 'group.uiConfig.betaFixed');
 
   const onFinish = (v) => {
     console.log(v);
@@ -40,7 +46,7 @@ const Recommendation = ({ setRecomVariables }) => {
             name="alpha"
             rules={[{ required: true, message: 'Please input your password!' }]}
           >
-            <Slider min={0} max={1} step={0.01} style={{ width: '100%' }} />
+            <Slider min={0} max={1} step={0.01} style={{ width: '100%' }} disabled={alphaFixed} />
           </Form.Item>
         </Col>
 
@@ -50,7 +56,7 @@ const Recommendation = ({ setRecomVariables }) => {
             name="beta"
             rules={[{ required: true, message: 'Please input your password!' }]}
           >
-            <Slider min={0} max={1} step={0.01} style={{ width: '100%' }} />
+            <Slider min={0} max={1} step={0.01} style={{ width: '100%' }} disabled={betaFixed} />
           </Form.Item>
         </Col>
 

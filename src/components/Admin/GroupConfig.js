@@ -1,7 +1,8 @@
-import { Card, Row, Col, Form, Input, Button } from 'antd';
+import { Card, Row, Col, Form, Input, Button, Switch } from 'antd';
 import { useQuery } from '@apollo/react-hooks';
 import { SurveySelect } from 'components/Select';
 import { useAuth } from 'hooks/auth';
+import capitalize from 'lodash/capitalize';
 import useGroupConfig from 'hooks/groupConfig';
 import { ALL_GROUPS } from 'gql/queries';
 
@@ -21,6 +22,22 @@ const ItemSelect = (SelectComponent, props) => ({ value, onChange }) => {
 };
 
 const SurveyItem = ItemSelect(SurveySelect);
+
+const GroupUIConfig = ({ uiConfig }) => {
+  const config = { ...uiConfig };
+  delete config.__typename;
+  return (
+    <>
+      {Object.entries(config).map(([key, val], i) => {
+        return (
+          <Form.Item name={['uiConfig', key]} label={`${capitalize(key)}:`} valuePropName="checked">
+            <Switch />
+          </Form.Item>
+        );
+      })}
+    </>
+  );
+};
 
 const GroupDetail = ({ group }) => {
   const { form, onChange, reset, save, canSave } = useGroupConfig(group);
@@ -55,6 +72,9 @@ const GroupDetail = ({ group }) => {
           >
             <SurveyItem placeholder="Survey" showSearch />
           </Form.Item>
+
+          <GroupUIConfig uiConfig={group.uiConfig} />
+
           <Form.Item {...tailLayout}>
             <Button type="primary" htmlType="submit" disabled={!canSave}>
               Save
