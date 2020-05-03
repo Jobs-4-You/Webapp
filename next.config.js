@@ -12,6 +12,7 @@ const nextConfig = {
   env: {
     GRAPHQL_URI: process.env.GRAPHQL_URI,
     NEXT_GRAPHQL_PROXY_URI: process.env.NEXT_GRAPHQL_PROXY_URI,
+    API_URI: process.env.API_URI,
   },
 };
 

@@ -10,8 +10,10 @@ export default (onChange) => {
   });
 
   const onSelect = (value, option) => {
-    console.log(value, option);
-    onChange(option.isco08);
+    onChange({
+      isco08: option.isco08,
+      title: option.value,
+    });
   };
   const handleSearch = (keywords) => {
     console.log('ahahha');

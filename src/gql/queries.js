@@ -6,12 +6,18 @@ export const ME = gql`
     me {
       id
       email
+      civilite
       firstName
       lastName
+      birthDate
       verified
       role
       baselineLink
       formDone
+      alpha
+      beta
+      oldJobIsco08
+      oldJobTitle
       group {
         ...GroupAllFields
       }
@@ -61,8 +67,13 @@ export const JOB_SEARCH_HINTS = gql`
 `;
 
 export const RECOMMENDATIONS = gql`
-  query recommendations($oldJobIsco08: Int!, $alpha: Float!, $beta: Float!) {
-    recommendations(oldJobIsco08: $oldJobIsco08, alpha: $alpha, beta: $beta) {
+  query recommendations($oldJobIsco08: Int!, $oldJobTitle: String!, $alpha: Float!, $beta: Float!) {
+    recommendations(
+      oldJobIsco08: $oldJobIsco08
+      oldJobTitle: $oldJobTitle
+      alpha: $alpha
+      beta: $beta
+    ) {
       varList
       results {
         jobTitle
@@ -81,6 +92,7 @@ export const POSITIONS = gql`
       positions {
         id
         jobQuantity
+        externalUrl
         company {
           name
           city

@@ -1,15 +1,25 @@
 import { Input, AutoComplete, Spin, Row, Col } from 'antd';
+import uniqBy from 'lodash/uniqBy';
 import useJobSearch from 'hooks/jobSearch';
 
-const JobSearch = ({ onChange }) => {
+const JobSearch = ({ onChange, me }) => {
   const { optionsObj, onSelect, handleSearch, loading } = useJobSearch(onChange);
 
-  const options = optionsObj.map(({ id, label, value }) => ({
+  let options = optionsObj.map(({ id, label, value }) => ({
     key: id,
     isco08: value,
     value: label,
     label: <div>{label}</div>,
   }));
+
+  options.push({
+    key: -1,
+    isco08: me.oldJobIsco08,
+    value: me.oldJobTitle,
+    label: <div>{me.oldJobTitle}</div>,
+  });
+
+  options = uniqBy(options, (x) => x.value);
 
   return (
     <Row>
@@ -20,6 +30,7 @@ const JobSearch = ({ onChange }) => {
             width: '100%',
           }}
           options={options}
+          defaultValue={me.oldJobTitle}
           onSelect={onSelect}
           onSearch={handleSearch}
           optionFilterProp="label"

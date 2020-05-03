@@ -26,18 +26,20 @@ const PageWrapper = styled.div`
   min-height: 280px;
 `;
 
-function MainLayout({ children }) {
+const MainLayout = ({ children }) => {
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <MainHeader className="header" theme="light">
         <AppHeader />
       </MainHeader>
       <ContentWrapper>
-        <NavBreadcrumb style={{ margin: '16px 0' }}>
+        {/*         <NavBreadcrumb style={{ margin: '16px 0' }}>
           <Breadcrumb.Item>Home</Breadcrumb.Item>
           <Breadcrumb.Item>List</Breadcrumb.Item>
           <Breadcrumb.Item>App</Breadcrumb.Item>
-        </NavBreadcrumb>
+        </NavBreadcrumb> */}
+        <br />
+        <br />
         <PageWrapper>{children}</PageWrapper>
       </ContentWrapper>
       <Footer style={{ textAlign: 'center' }}>
@@ -45,7 +47,7 @@ function MainLayout({ children }) {
       </Footer>
     </Layout>
   );
-}
+};
 
 MainLayout.propTypes = {
   children: PropTypes.node.isRequired,

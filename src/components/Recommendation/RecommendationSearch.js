@@ -1,7 +1,7 @@
 import { Form, Row, Col, Button, Slider } from 'antd';
 import get from 'lodash/get';
-import JobSearch from './JobSearch';
 import useMe from 'hooks/me';
+import JobSearch from './JobSearch';
 
 const Recommendation = ({ setRecomVariables }) => {
   const onValuesChange = (v) => console.log(v, 'vvv');
@@ -9,6 +9,8 @@ const Recommendation = ({ setRecomVariables }) => {
   const me = useMe();
   const alphaFixed = get(me, 'group.uiConfig.alphaFixed');
   const betaFixed = get(me, 'group.uiConfig.betaFixed');
+
+  console.log(me);
 
   const onFinish = (v) => {
     console.log(v);
@@ -23,9 +25,14 @@ const Recommendation = ({ setRecomVariables }) => {
       style={{ width: '100%' }}
       onFinish={onFinish}
       initialValues={{
-        oldJobIsco08: undefined,
-        alpha: 0.5,
-        beta: 0.5,
+        oldJobData: me.oldJobIsco08
+          ? {
+              isco08: me.oldJobIsco08 || undefined,
+              title: me.oldJobTitle || undefined,
+            }
+          : undefined,
+        alpha: me.alpha || 0.5,
+        beta: me.beta || 0.5,
       }}
     >
       <br />
@@ -33,10 +40,10 @@ const Recommendation = ({ setRecomVariables }) => {
         <Col lg={8} xs={12}>
           <Form.Item
             label="Job précédent"
-            name="oldJobIsco08"
+            name="oldJobData"
             rules={[{ required: true, message: 'Please input your username!' }]}
           >
-            <JobSearch />
+            <JobSearch me={me} />
           </Form.Item>
         </Col>
 
